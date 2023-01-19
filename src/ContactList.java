@@ -47,15 +47,16 @@ public class ContactList
         String lName = s.nextLine();
         System.out.println("Phone number: ");
         String phone = s.nextLine();
+        Person person;
         if(type == 1){
             System.out.println("Grade: ");
             int grade = s.nextInt();
-            Person person = new Student(name, lName, phone, grade);
+            person = new Student(name, lName, phone, grade);
         }
-        else if (type == 2){
+        else{
             System.out.println("Salary: ");
             int salary = s.nextInt();
-            Person person = new Worker(name, lName, phone, salary);
+            person = new Worker(name, lName, phone, salary);
         }
 
         contacts.add(person);
@@ -78,29 +79,77 @@ public class ContactList
      */
     public void sort(int sortBy) {
         // TODO: Complete the sort method
-        searchByFirstName(contacts);
-        searchByLastName(contacts);
-        searchByPhoneNumber(contacts);
+        // sort by first name
+        int n = contacts.size();
+        String letter1;
+        String letter2;
+        for(int pass = 1; pass < n; pass++){
+            for(int comp = 0; comp < n - pass; comp++)
+            {
+                if(sortBy == 0){
+                    letter1 = contacts.get(comp).getFirstName();
+                    letter2 = contacts.get(comp + 1).getFirstName();
+                }
+                else if (sortBy == 1){
+                    // sort by last name
+                    letter1 = contacts.get(comp).getLastName();
+                    letter2 = contacts.get(comp + 1).getLastName();
+                }
+                else{
+                    // sort by phone number
+                    letter1 = contacts.get(comp).getPhoneNumber();
+                    letter2 = contacts.get(comp + 1).getPhoneNumber();
+                }
+                if (letter1.compareToIgnoreCase(letter2) > 0) {
+                    Person temp = contacts.get(comp);
+                    // set index of contacts.getcomp to what is in comp+1
+                    contacts.set(comp, contacts.get(comp+1));
+                    // set what was in comp+1 to temp
+                    contacts.set(comp + 1, temp);
+                }
+            }
+        }
     }
 
     // TODO: Write searchByFirstName
-    public void searchByFirstName(ArrayList contacts){
-        //
+    public Person searchByFirstName(String firstName) {
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getFirstName().equals(firstName)) {
+                return contacts.get(i);
+            }
+        }
+        return null;
     }
-
     // TODO: Write searchByLastName
-    public void searchByLastName(ArrayList contacts){
-        //
+    public Person searchByLastName(String lastName) {
+        for (int i = 0; i < contacts.size(); i++){
+            if(contacts.get(i).getFirstName().equals(lastName)){
+                return contacts.get(i);
+            }
+        }
+        return null;
     }
     // TODO: Write searchByPhoneNumber
-    public void searchByPhoneNumber(ArrayList contacts){
-        //
+    public Person searchByPhoneNumber(String phoneNumber){
+        for (int i = 0; i < contacts.size(); i++){
+            if(contacts.get(i).getFirstName().equals(phoneNumber)){
+                return contacts.get(i);
+            }
+        }
+        return null;
     }
     /**
      * Lists just the Student objects in the Contact List
      */
     public void listStudents() {
         // TODO: Complete the listStudents method
+        for(int i = 0; i < contacts.size(); i++){
+            //if contact is a student print it
+            //how to check if contact is a student?
+            if (contacts.get(i) instanceof Student){
+                System.out.println(contacts.get(i));
+            }
+        }
     }
 
     /**
@@ -111,6 +160,43 @@ public class ContactList
         System.out.println("Welcome to your Contacts List");
         System.out.println("Please pick from the following menu options");
         printMenuOptions();
+        Scanner s = new Scanner(System.in);
+        System.out.println("What would you like to do?");
+        int number = s.nextInt();
+        if(number == 1){
+            addContact();
+        }
+        else if (number == 2){
+            sort(0);
+        }
+        else if (number == 3){
+            sort(1);
+        }
+        else if (number == 4){
+            sort(2);
+        }
+        else if (number == 5){
+            listStudents();
+        }
+        else if (number == 6){
+            System.out.println("Enter a name");
+            String name = s.nextLine();
+            searchByFirstName(name);
+        }
+        else if (number == 7){
+            System.out.println("Enter a name");
+            String lName = s.nextLine();
+            searchByLastName(lName);
+        }
+        else if (number == 8){
+            System.out.println("Enter a number");
+            String num = s.nextLine();
+            searchByPhoneNumber(num);
+        }
+        else if (number == 0){
+            // how to exit?
+        }
+
 
         // TODO: Complete the run method
     }
