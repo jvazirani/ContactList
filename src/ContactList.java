@@ -40,7 +40,7 @@ public class ContactList
         // TODO: Complete the addContact method
         Scanner s = new Scanner(System.in);
         System.out.println("Select a type of contact to add: " + "\n" + "1. Student " + "\n" + "2. Worker");
-        int type = s.nextInt();
+        String type = s.nextLine();
         System.out.println("First name: ");
         String name = s.nextLine();
         System.out.println("Last name: ");
@@ -48,7 +48,7 @@ public class ContactList
         System.out.println("Phone number: ");
         String phone = s.nextLine();
         Person person;
-        if(type == 1){
+        if(type.equals("1")){
             System.out.println("Grade: ");
             int grade = s.nextInt();
             person = new Student(name, lName, phone, grade);
